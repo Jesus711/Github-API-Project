@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import './App.css';
-import { Octokit } from 'octokit';
+import { Octokit } from '@octokit/core';
 
 
 function App() {
