@@ -5,9 +5,24 @@ import RepoItem from './RepoItem';
 
 function Home() {
   window.global ||= window;
-  const [searched, setSearched] = useState("");
+  const [searched, setSearched] = useState(() => {
+    let search = window.sessionStorage.getItem('search')
+    return search === null ? "" : search;
+  });
   const [saveSearch, setSaveSearch] = useState("");
-  const [repos, setRepos] = useState([])
+  const [repos, setRepos] = useState(() => {
+    let repos_results;
+    let previous_results: string | null = window.sessionStorage.getItem('results')
+    if (previous_results != null){
+      repos_results = JSON.parse(previous_results)
+
+      console.log(typeof previous_results)
+      console.log(repos_results)
+
+      return repos_results
+    }
+    return [];
+})
 
   const token = import.meta.env.VITE_GITHUB_API_TOKEN;
   const octokit = new Octokit( {auth: `${token}` });
@@ -16,12 +31,14 @@ function Home() {
 
 
   useEffect(() => {
-
+      handleFormSubmit(null)
   }, [])
 
 
   async function handleFormSubmit(e: any) {
-    e.preventDefault()
+    if(e !== null){
+      e.preventDefault()
+    }
 
     
 
@@ -32,9 +49,14 @@ function Home() {
     setSaveSearch(searched)
     setSearched("")
 
-    let header: any = document.getElementById('results-header')
-    //console.log(header)
-    header.style.display = "block";
+    window.sessionStorage.setItem('search', searched);
+
+    let header: any = document.body.getElementsByClassName('results-header')
+    console.log(header)
+
+    header[0].style.display = 'block';
+    header[1].style.display = 'none';
+
 
 
     let loader: any = document.body.getElementsByClassName('loader')[0];
@@ -55,6 +77,7 @@ function Home() {
       return res.data
     }).catch(err => {
       result_none.style.display = "block";
+      header[1].style.display = 'none';
       return null;
     })
     
@@ -66,7 +89,9 @@ function Home() {
     }
 
     result_none.style.display = "none";
+    header[1].style.display = 'block';
     //loader.style.display = "none";
+    window.sessionStorage.setItem('results', JSON.stringify(search_result));
     setRepos(search_result)
 
     console.log(search_result)
@@ -78,11 +103,12 @@ function Home() {
       <a className='title' href={base}>RepOrg Search</a>
       <p className='project-desc'>Search Popular Organizations Public GitHub Repositories</p>
       <form className='search-repo-form' onSubmit={(e) => {handleFormSubmit(e)}}>
-        <input id='search-input' type="search" placeholder='Enter Org Name' value={searched} required onChange={(e) => {setSearched(e.target.value)}}></input>
+        <input id='search-input' type="search" placeholder="Enter An Org's Name" value={searched} required onChange={(e) => {setSearched(e.target.value)}}></input>
         <button id='search-btn' type='submit'>Search</button>
       </form>
       <div className='results-section'>
-        <h2 id='results-header'>Repos Results for {`'${saveSearch}'`} :</h2>
+        <h2 className='results-header'>Repos Results for {`'${saveSearch}'`}</h2>
+        <h2 className='results-header'>Click on Repo to View:</h2>
         <div className='repo-list'>
           {repos.length > 0 && repos.map(repo => {
             return (

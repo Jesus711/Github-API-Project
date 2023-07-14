@@ -91,7 +91,7 @@
     }
 }
 
-#results-header {
+.results-header {
     display: none;
     margin: none;
     font-size: 1.8rem;
