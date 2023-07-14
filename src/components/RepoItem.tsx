@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 
 interface Props {
@@ -96,12 +97,16 @@ export default function RepoItem({ repo }: Props) {
   //   console.log(`${key} : ${typeof repo[key]},`)
   // }
 
-  console.log(repo)
+  const base = import.meta.env.DEV ? '/' : '/Spotify-Web-Project/'
 
+  const navigate = useNavigate();
+
+  function handleRepoClick() {
+    console.log(repo)
+    navigate(`${base}repo?=${repo.name}`, {replace: false, state: {'repo': repo}})
+  }
 
   return (
-    <div key={repo.id} className="repo">
-        <button className='repo-btn'>{repo.name}</button>
-    </div>
+    <a className='repo-btn' onClick={() => handleRepoClick()}>{repo.name}</a>
   )
 }
