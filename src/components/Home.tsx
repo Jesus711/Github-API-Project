@@ -202,7 +202,7 @@ function Home() {
 
   return (
     <>
-      <a className='title' href={base}>RepOrg Search</a>
+      <a className='title' href={base} onClick={() => window.sessionStorage.clear()}>RepOrg Search</a>
       <p className='project-desc'>Search Popular Organizations Public GitHub Repositories</p>
       <form className='search-repo-form' onSubmit={(e) => {handleFormSubmit(e)}}>
         <input id='search-input' type="search" placeholder="Enter An Org's Name" value={searched} required onChange={(e) => {setSearched(e.target.value)}}></input>
