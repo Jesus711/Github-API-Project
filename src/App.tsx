@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Home from './components/Home'
 import './App.css';
 import RepoDisplay from './components/RepoDisplay';
+import CommitDisplay from './components/CommitDisplay';
 
 export default function App() {
 
@@ -14,6 +15,7 @@ export default function App() {
       <Routes>
         <Route path={base} element={<Home/>}></Route>
         <Route path={`${base}:repo`} element={<RepoDisplay/>}/>
+        <Route path={`${base}:repo/:commit`} element={<CommitDisplay/>}/>
       </Routes>
     </BrowserRouter>
   )

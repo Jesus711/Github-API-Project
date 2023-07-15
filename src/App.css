@@ -10,7 +10,7 @@
     text-decoration: none;
     text-decoration: underline;
     font-style: italic;
-    font-size: 2.25rem;
+    font-size: 2.5rem;
     color: inherit;
     font-weight: 700;
 }
@@ -114,7 +114,7 @@
 
 .repo-btn {
     margin: none;
-    padding: 8px 0 8px 0;
+    padding: 8px;
     width: 80%;
     background-color: hsl(200, 90%, 40%);
     color: #FFF;
@@ -177,4 +177,44 @@
     margin: 0;
     padding: 0;
     font-size: 1.3rem;
+}
+
+.commits-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 24px;
+}
+
+.commits-list h2 {
+    padding: 0;
+    margin-bottom: 0;
+    font-size: 2.2rem;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+
+.commit-btn {
+    margin: none;
+    padding: 6px;
+    width: 90%;
+    background-color: hsl(200, 90%, 40%);
+    color: #FFF;
+    font-size: 1.75rem;
+    font-weight: bold;
+    border-radius: 8px;
+    text-align: center;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-decoration: none;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.commit-btn:hover {
+    overflow: auto;
+    white-space: normal;
 }

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useState } from 'react';
+import { Octokit } from 'octokit';
 
 interface Repo {
     id: number,
@@ -86,15 +87,72 @@ interface Repo {
   
 }
 
+interface Commit {
+  sha : string,
+  node_id : string,
+  commit : object,
+  url : string,
+  html_url : string,
+  comments_url : string,
+  author : object,
+  committer : object,
+  parents : object,
+}
+
 
 export default function RepoDisplay() {
 
   const location = useLocation();
 
-    const [repoInfo, setRepo] = useState<Repo>(() => {
+  const [repoInfo, setRepo] = useState<Repo>(() => {
       console.log(location.state.repo);
       return location.state.repo;
     })
+
+  const [commits, setCommits] = useState<Array<Commit>>([])
+
+  
+  const token = import.meta.env.VITE_GITHUB_API_TOKEN;
+  const octokit = new Octokit( {auth: `${token}` });
+
+  const base = import.meta.env.DEV ? '/' : '/Spotify-Web-Project/';
+
+  const navigate = useNavigate();
+
+
+  useEffect(() => {
+    getRepoCommits()
+  }, [])
+
+
+  async function getRepoCommits() {
+    let commits_result = await octokit.request('GET /repos/{owner}/{repo}/commits', {
+      owner: repoInfo.owner.login,
+      repo: repoInfo.name,
+      headers: {
+        'X-GitHub-Api-Version': '2022-11-28'
+      }
+    })
+    .then(res => {
+      if(res.status >= 400){
+        console.log(res)
+        return null;
+      }
+      return res.data
+    }).catch(err => {
+      return null;
+    })
+
+    //Gets all values typing to create type interface
+    // let keys: any = Object.keys(commits_result[0]);
+    // console.log(keys)
+    // for(let key of keys){
+    //   console.log(`${key} : ${typeof commits_result[0][key]},`)
+    // }
+
+    console.log("COMMITS", commits_result)
+    setCommits(commits_result)
+  }
     
 
   return (
@@ -133,6 +191,12 @@ export default function RepoDisplay() {
 
       <div className='commits-list'>
         <h2>Commits</h2>
+        <h3>Click to View Info</h3>
+        {commits.length > 0 && commits.map(commit => {
+          return (
+            <a className='commit-btn' onClick={() => navigate(`${base}${repoInfo.name}/commit?=${commit.sha}`, {replace: false, state: { "commit": commit }})}>{commit.commit.committer.date}</a>
+          )
+        })}
       </div>
 
     </div>
