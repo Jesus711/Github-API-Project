@@ -10,7 +10,7 @@
     text-decoration: none;
     text-decoration: underline;
     font-style: italic;
-    font-size: 2.5rem;
+    font-size: 2.75rem;
     color: inherit;
     font-weight: 700;
 }
@@ -105,16 +105,17 @@
 
 .repo-list {
     width: 100%;
+    margin-bottom: 8px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    row-gap: 16px;
+    row-gap: 8px;
 }
 
 
 .repo-btn {
     margin: none;
-    padding: 8px;
+    padding: 10px;
     width: 80%;
     background-color: hsl(200, 90%, 40%);
     color: #FFF;
@@ -162,8 +163,18 @@
 
 .description {
     text-align: center;
-    font-size: 1.4rem;
+    font-size: 1.6rem;
     font-weight: 600;
+    background-color: hsl(200, 90%, 40%);
+    border-radius: 16px;
+}
+
+.repo-display {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
 }
 
 .repo-display h3 {
@@ -174,31 +185,37 @@
 }
 
 .repo-display p {
-    margin: 0;
-    padding: 0;
-    font-size: 1.3rem;
+    margin: auto;
+    font-size: 1.6rem;
+    width: 90%;
+    padding: 8px;
 }
 
 .commits-list {
+    margin-bottom: 8px;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    row-gap: 24px;
+    row-gap: 8px;
 }
 
 .commits-list h2 {
-    padding: 0;
-    margin-bottom: 0;
+    padding: 0px;
+    margin-bottom: 0px;
+    margin-top: 4px;
     font-size: 2.2rem;
     font-weight: bold;
-    text-decoration: underline;
+}
+
+.commits-list h3 {
+
 }
 
 
 .commit-btn {
     margin: none;
-    padding: 6px;
+    padding: 4px;
     width: 90%;
     background-color: hsl(200, 90%, 40%);
     color: #FFF;
@@ -214,7 +231,95 @@
     cursor: pointer;
 }
 
+.commit-btn ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.commit-btn ul li {
+    margin: auto;
+    width: 80%;
+    padding: 2px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow-x: hidden;
+}
+
+.commit-btn ul li:hover {
+    width: 100%;
+    margin: 0;
+    padding: 2px;
+    white-space: normal;
+    overflow-x: auto
+}
+
 .commit-btn:hover {
     overflow: auto;
     white-space: normal;
+}
+
+.commit {
+    padding: 4px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+}
+
+.commit h1 {
+    text-align: center;
+    text-decoration: underline;
+    margin-bottom: 8px;
+}
+
+.commit ul {
+    list-style-type: none;
+    padding: 8px;
+    margin: auto;
+    text-align: left;
+    background-color: hsl(200, 90%, 40%);
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+}
+
+.commit ul li {
+    padding: 0;
+    margin: 0;
+    font-size: 1.6rem;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+}
+
+.commit ul li:hover {
+    white-space: normal;
+    overflow-x: visible;
+    word-wrap: break-word;
+}
+
+.commit h2 {
+    text-align: center;
+    font-size: 1.8rem;
+    margin-bottom: 4px;
+}
+
+.commit p {
+    text-align: center;
+    font-size: 1.6rem;
+    margin: 0;
+    background-color: hsl(200, 90%, 40%);
+    border-radius: 16px;
+    padding: 8px;
+    width: 90%;
+}
+
+.no-commits {
+    margin: 16px;
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
 }

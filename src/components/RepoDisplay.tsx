@@ -126,6 +126,9 @@ export default function RepoDisplay() {
 
 
   async function getRepoCommits() {
+
+    console.log("HERE", commits, commits.length)
+
     let commits_result = await octokit.request('GET /repos/{owner}/{repo}/commits', {
       owner: repoInfo.owner.login,
       repo: repoInfo.name,
@@ -140,7 +143,7 @@ export default function RepoDisplay() {
       }
       return res.data
     }).catch(err => {
-      return null;
+      console.log(err);
     })
 
     //Gets all values typing to create type interface
@@ -150,6 +153,11 @@ export default function RepoDisplay() {
     //   console.log(`${key} : ${typeof commits_result[0][key]},`)
     // }
 
+    if (commits_result === null){
+      setCommits([]);
+      return;
+    }
+    
     console.log("COMMITS", commits_result)
     setCommits(commits_result)
   }
@@ -189,15 +197,25 @@ export default function RepoDisplay() {
         </tr>
       </table>
 
-      <div className='commits-list'>
+      {commits.length === 0 ? <div className='no-commits'>No Commits Found</div> :
+        <div className='commits-list'>
         <h2>Commits</h2>
-        <h3>Click to View Info</h3>
+        <h3><u>Click to View Info</u></h3>
         {commits.length > 0 && commits.map(commit => {
           return (
-            <a className='commit-btn' onClick={() => navigate(`${base}${repoInfo.name}/commit?=${commit.sha}`, {replace: false, state: { "commit": commit }})}>{commit.commit.committer.date}</a>
+            <a 
+            className='commit-btn' 
+            onClick={() => navigate(`${base}${repoInfo.name}/commit?=${commit.sha}`, 
+            {replace: false, state: { "commit": commit }})}>
+              <ul>
+                <li>User: {commit.commit.author.name}</li>
+                <li>Date: {commit.commit.committer.date.substring(0, 10)}</li>
+              </ul>
+            </a>
           )
         })}
-      </div>
+        </div>
+      }
 
     </div>
   )

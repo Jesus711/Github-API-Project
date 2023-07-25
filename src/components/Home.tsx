@@ -210,7 +210,7 @@ function Home() {
       </form>
       <div className='results-section'>
         <h2 className='results-header'>Repos Results for {`'${saveSearch}'`}</h2>
-        <h2 className='results-header'>Click on Repo to View:</h2>
+        <h2 className='results-header'><u>Click on Repo to View:</u></h2>
         <div className='repo-list'>
           {repos.length > 0 && repos.map(repo => {
             return (
