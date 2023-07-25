@@ -28,9 +28,9 @@ export default function CommitDisplay() {
         <div className='commit'>
             <h1>Commit</h1>
             <ul>
-                <li>Username: {commit.author.login}</li>
-                <li>Date: {commit.commit.author.date}</li>
-                <li>Hash: {commit.sha}</li>
+                <li><strong>Name:</strong> {commit.commit.author.name}</li>
+                <li><strong>Date:</strong> {commit.commit.author.date.replace('T', ' ').replace('Z', '')}</li>
+                <li><strong>Hash:</strong> {commit.sha}</li>
             </ul>
             <h2>Message:</h2>
             <p>{commit.commit.message}</p>
