@@ -34,6 +34,7 @@ export default function CommitDisplay() {
             </ul>
             <h2>Message:</h2>
             <p>{commit.commit.message}</p>
+            <a className='github-link' target='_blank' href={commit.html_url ? commit.html_url : '#'}>Link to Commit</a>
         </div>
     )
 }

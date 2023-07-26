@@ -197,10 +197,17 @@ export default function RepoDisplay() {
         </tr>
       </table>
 
+      <a className='github-link' target='_blank' href={repoInfo.url ? repoInfo.html_url : '#'}>Click to View Github Repo</a>
+
+
+      {commits.length !== 0 && <div>      
+            <h2 className='commit-header'>Commits</h2>
+            <h3 className='commit-header'><u>Click Commit to View Info</u></h3>
+          </div>}
+
       {commits.length === 0 ? <div className='no-commits'>No Commits Found</div> :
+
         <div className='commits-list'>
-        <h2>Commits</h2>
-        <h3><u>Click to View Info</u></h3>
         {commits.length > 0 && commits.map(commit => {
           return (
             <a 
